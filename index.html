@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecommerce with Vue</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h3>Ecommerce VueJS</h3>
+        <button class="cart">Carro (0)</button>
+        <div class="cart-content">
+          <div class="cart-content__product">
+            <img src="" alt="" />
+            <span
+              >{{ product.name }} - $ {{ new
+              Intl.NumberFormat("es-CO").format(product.price) }}</span
+            >
+          </div>
+        </div>
+      </header>
+      <main>
+        <section class="product">
+          <div class="product__thumbails">
+            <div class="thumb"></div>
+            <div class="thumb"></div>
+          </div>
+          <div class="product__image">
+            <img src="" alt="" />
+          </div>
+        </section>
+        <section class="description">
+          <h4>
+            {{ product.name.toUpperCase() }} {{ product.stock === 0 ? "😔" :
+            "😀"}}
+          </h4>
+          <span class="badge new">Nuevo</span>
+          <span class="badge offer">Oferta</span>
+          <p class="description_status"></p>
+          <p class="description__price">
+            $ {{ new Intl.NumberFormat("es-CO").format(product.price) }}
+          </p>
+          <p class="description__content">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
+            minus quis corrupti laborum nulla delectus atque molestiae enim!
+            Amet in perspiciatis autem reiciendis sunt non officiis temporibus
+            vel maiores.
+          </p>
+          <div class="discount">
+            <span>Codigo de descuento</span>
+            <input type="text" placeholder="Ingresa tu codigo:" />
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      const { createApp } = Vue;
+
+      const app = createApp({
+        data() {
+          return {
+            product: {
+              name: "camara",
+              price: 450_000,
+              stock: 3,
+              content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
+            minus quis corrupti laborum nulla delectus atque molestiae enim!
+            Amet in perspiciatis autem reiciendis sunt non officiis temporibus
+            vel maiores.`,
+              images: [
+                {
+                  image: "./images/camara.jpg",
+                  thumbail: "./images/camara-thumb.jpg",
+                },
+                {
+                  image: "./images/camara-2.jpg",
+                  thumbail: "./images/camara-2-thumb.jpg",
+                },
+              ],
+            },
+          };
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>
