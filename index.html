@@ -11,7 +11,7 @@
       <header>
         <h3>Ecommerce VueJS</h3>
         <button class="cart">Carro (0)</button>
-        <div class="cart-content">
+        <div class="cart-content" v-show="cartOpen">
           <div class="cart-content__product">
             <img
               v-bind:src="product.images[0].image"
@@ -54,9 +54,11 @@
             {{ product.name.toUpperCase() }} {{ product.stock === 0 ? "😔" :
             "😀"}}
           </h4>
-          <span class="badge new">Nuevo</span>
-          <span class="badge offer">Oferta</span>
-          <p class="description_status"></p>
+          <span class="badge new" v-if="product.new">Nuevo</span>
+          <span class="badge offer" v-if="product.offer">Oferta</span>
+          <p class="description_status" v-if="product.stock === 3">Quedan pocas unidades</p>
+          <p class="description_status" v-else-if="product.stock === 2">El producto esta por terminarse!</p>
+          <p class="description_status" v-else="product.stock === 1">Ultima unidad disponible</p>
           <p class="description__price">
             $ {{ new Intl.NumberFormat("es-CO").format(product.price) }}
           </p>
@@ -70,6 +72,7 @@
             <span>Codigo de descuento</span>
             <input type="text" placeholder="Ingresa tu codigo:" />
           </div>
+          <button :disabled="product.stock === 0">Agregar al carrito</button>
         </section>
       </main>
     </div>
@@ -98,7 +101,10 @@
                   thumbail: "./images/camara-2-thumb.jpg",
                 },
               ],
+              new: false,
+              offer: true
             },
+            cartOpen: false,
             activeImage: 0,
           };
         },
