@@ -12,18 +12,16 @@
         <h3>Ecommerce VueJS</h3>
         <button class="cart">Carro (0)</button>
         <div class="cart-content" v-show="cartOpen">
-          <div class="cart-content__product">
+          <div
+            class="cart-content__product"
+            :class="{ 'bg-gray': index & 1}"
+            v-for="(product, index) in cart"
+            :key="product.index"
+          >
             <img
               v-bind:src="product.images[0].image"
               :alt="product.name.toUpperCase"
             />
-            <span
-              >{{ product.name }} - $ {{ new
-              Intl.NumberFormat("es-CO").format(product.price) }}</span
-            >
-          </div>
-          <div class="cart-content__product">
-            <img v-bind:src="product.images[1].image" :alt="product.name" />
             <span
               >{{ product.name }} - $ {{ new
               Intl.NumberFormat("es-CO").format(product.price) }}</span
@@ -35,14 +33,11 @@
         <section class="product">
           <div class="product__thumbnails">
             <div
+              v-for="(image, index) in product.images"
+              :key="image.index"
               class="thumb"
-              :class="{ active: activeImage === 0}"
-              :style="{ backgroundImage: 'url(' + product.images[0].thumbail + ')'}"
-            ></div>
-            <div
-              class="thumb"
-              :class="{ active: activeImage === 1}"
-              :style="{ backgroundImage: 'url(' + product.images[1].thumbail + ')'}"
+              :class="{ active: activeImage === index}"
+              :style="{ backgroundImage: 'url(' + product.images[index].thumbail + ')'}"
             ></div>
           </div>
           <div class="product__image">
@@ -56,9 +51,15 @@
           </h4>
           <span class="badge new" v-if="product.new">Nuevo</span>
           <span class="badge offer" v-if="product.offer">Oferta</span>
-          <p class="description_status" v-if="product.stock === 3">Quedan pocas unidades</p>
-          <p class="description_status" v-else-if="product.stock === 2">El producto esta por terminarse!</p>
-          <p class="description_status" v-else="product.stock === 1">Ultima unidad disponible</p>
+          <p class="description_status" v-if="product.stock === 3">
+            Quedan pocas unidades
+          </p>
+          <p class="description_status" v-else-if="product.stock === 2">
+            El producto esta por terminarse!
+          </p>
+          <p class="description_status" v-else="product.stock === 1">
+            Ultima unidad disponible
+          </p>
           <p class="description__price">
             $ {{ new Intl.NumberFormat("es-CO").format(product.price) }}
           </p>
@@ -102,10 +103,96 @@
                 },
               ],
               new: false,
-              offer: true
+              offer: true,
             },
-            cartOpen: false,
+            cartOpen: true,
             activeImage: 0,
+            cart: [
+              {
+                name: "camara",
+                price: 450_000,
+                stock: 3,
+                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
+            minus quis corrupti laborum nulla delectus atque molestiae enim!
+            Amet in perspiciatis autem reiciendis sunt non officiis temporibus
+            vel maiores.`,
+                images: [
+                  {
+                    image: "./images/camara.jpg",
+                    thumbail: "./images/camara-thumb.jpg",
+                  },
+                  {
+                    image: "./images/camara-2.jpg",
+                    thumbail: "./images/camara-2-thumb.jpg",
+                  },
+                ],
+                new: false,
+                offer: true,
+              },
+              {
+                name: "camara",
+                price: 450_000,
+                stock: 3,
+                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
+            minus quis corrupti laborum nulla delectus atque molestiae enim!
+            Amet in perspiciatis autem reiciendis sunt non officiis temporibus
+            vel maiores.`,
+                images: [
+                  {
+                    image: "./images/camara.jpg",
+                    thumbail: "./images/camara-thumb.jpg",
+                  },
+                  {
+                    image: "./images/camara-2.jpg",
+                    thumbail: "./images/camara-2-thumb.jpg",
+                  },
+                ],
+                new: false,
+                offer: true,
+              },
+              {
+                name: "camara",
+                price: 450_000,
+                stock: 3,
+                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
+            minus quis corrupti laborum nulla delectus atque molestiae enim!
+            Amet in perspiciatis autem reiciendis sunt non officiis temporibus
+            vel maiores.`,
+                images: [
+                  {
+                    image: "./images/camara.jpg",
+                    thumbail: "./images/camara-thumb.jpg",
+                  },
+                  {
+                    image: "./images/camara-2.jpg",
+                    thumbail: "./images/camara-2-thumb.jpg",
+                  },
+                ],
+                new: false,
+                offer: true,
+              },
+              {
+                name: "camara",
+                price: 450_000,
+                stock: 3,
+                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
+            minus quis corrupti laborum nulla delectus atque molestiae enim!
+            Amet in perspiciatis autem reiciendis sunt non officiis temporibus
+            vel maiores.`,
+                images: [
+                  {
+                    image: "./images/camara.jpg",
+                    thumbail: "./images/camara-thumb.jpg",
+                  },
+                  {
+                    image: "./images/camara-2.jpg",
+                    thumbail: "./images/camara-2-thumb.jpg",
+                  },
+                ],
+                new: false,
+                offer: true,
+              },
+            ],
           };
         },
       });
