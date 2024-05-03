@@ -20,8 +20,7 @@ app.component("product", {
             {{ product.name.toUpperCase() }} {{ product.stock === 0 ? "😔" :
             "😀"}}
           </h4>
-          <span class="badge new" v-if="product.new">Nuevo</span>
-          <span class="badge offer" v-if="product.offer">Oferta</span>
+          <badge :product="product"></badge>
           <p class="description_status" v-if="product.stock === 3">
             Quedan pocas unidades
           </p>
