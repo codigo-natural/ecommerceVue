@@ -53,30 +53,9 @@ app.component("product", {
           </button>
         </section>
   `,
+  props: ["product"],
   data() {
     return {
-      product: {
-        name: "camara",
-        price: 450_000,
-        stock: 3,
-        content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
-      minus quis corrupti laborum nulla delectus atque molestiae enim!
-      Amet in perspiciatis autem reiciendis sunt non officiis temporibus
-      vel maiores.`,
-        images: [
-          {
-            image: "./images/camara.jpg",
-            thumbail: "./images/camara-thumb.jpg",
-          },
-          {
-            image: "./images/camara-2.jpg",
-            thumbail: "./images/camara-2-thumb.jpg",
-          },
-        ],
-        new: false,
-        offer: true,
-        quantity: 1,
-      },
       activeImage: 0,
       discountCodes: ["VIERNES", "MONTAÑA"],
     };

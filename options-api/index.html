@@ -33,11 +33,7 @@
         </div>
       </header>
       <main>
-        <Product></Product>
-        <Product></Product>
-        <Product></Product>
-        <Product></Product>
-        <Product></Product>
+        <Product v-for="product in products" :key="product.name" :product="product"></Product>
       </main>
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -47,6 +43,96 @@
       const app = createApp({
         data() {
           return {
+            products: [
+              {
+                name: "camara_1",
+                price: 450_00,
+                stock: 3,
+                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
+        minus quis corrupti laborum nulla delectus atque molestiae enim!
+        Amet in perspiciatis autem reiciendis sunt non officiis temporibus
+        vel maiores.`,
+                images: [
+                  {
+                    image: "./images/camara.jpg",
+                    thumbail: "./images/camara-thumb.jpg",
+                  },
+                  {
+                    image: "./images/camara-2.jpg",
+                    thumbail: "./images/camara-2-thumb.jpg",
+                  },
+                ],
+                new: false,
+                offer: true,
+                quantity: 1,
+              },
+              {
+                name: "camara_2",
+                price: 450_000,
+                stock: 3,
+                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
+        minus quis corrupti laborum nulla delectus atque molestiae enim!
+        Amet in perspiciatis autem reiciendis sunt non officiis temporibus
+        vel maiores.`,
+                images: [
+                  {
+                    image: "./images/camara.jpg",
+                    thumbail: "./images/camara-thumb.jpg",
+                  },
+                  {
+                    image: "./images/camara-2.jpg",
+                    thumbail: "./images/camara-2-thumb.jpg",
+                  },
+                ],
+                new: false,
+                offer: true,
+                quantity: 1,
+              },
+              {
+                name: "camara 3",
+                price: 450_030,
+                stock: 3,
+                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
+        minus quis corrupti laborum nulla delectus atque molestiae enim!
+        Amet in perspiciatis autem reiciendis sunt non officiis temporibus
+        vel maiores.`,
+                images: [
+                  {
+                    image: "./images/camara.jpg",
+                    thumbail: "./images/camara-thumb.jpg",
+                  },
+                  {
+                    image: "./images/camara-2.jpg",
+                    thumbail: "./images/camara-2-thumb.jpg",
+                  },
+                ],
+                new: false,
+                offer: true,
+                quantity: 1,
+              },
+              {
+                name: "cama 4",
+                price: 4350_000,
+                stock: 3,
+                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
+        minus quis corrupti laborum nulla delectus atque molestiae enim!
+        Amet in perspiciatis autem reiciendis sunt non officiis temporibus
+        vel maiores.`,
+                images: [
+                  {
+                    image: "./images/camara.jpg",
+                    thumbail: "./images/camara-thumb.jpg",
+                  },
+                  {
+                    image: "./images/camara-2.jpg",
+                    thumbail: "./images/camara-2-thumb.jpg",
+                  },
+                ],
+                new: false,
+                offer: true,
+                quantity: 1,
+              },
+            ],
             cartOpen: true,
             cart: [],
           };
