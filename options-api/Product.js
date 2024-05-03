@@ -30,7 +30,7 @@ app.component("product", {
           <p class="description_status" v-else-if="product.stock === 1">
             Ultima unidad disponible
           </p>
-          <p class="description__price">
+          <p class="description__price" :style="{ color: price_color}">
             $ {{ new Intl.NumberFormat("es-CO").format(product.price) }}
           </p>
           <p class="description__content">
@@ -59,6 +59,7 @@ app.component("product", {
     return {
       activeImage: 0,
       discountCodes: ["VIERNES", "MONTAÑA"],
+      price_color: "rgb(104 104 209)",
     };
   },
   methods: {
@@ -71,6 +72,14 @@ app.component("product", {
     },
     sendToCart() {
       this.$emit("sendtocart", this.product);
+    },
+  },
+  watch: {
+    activeImage(value, oldValue) {},
+    "product.stock"(stock) {
+      if (stock <= 1) {
+        this.price_color = "rgb(188 30 67)";
+      }
     },
   },
 });
