@@ -49,96 +49,7 @@
       const app = createApp({
         data() {
           return {
-            products: [
-              {
-                name: "camara_1",
-                price: 450_00,
-                stock: 3,
-                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
-        minus quis corrupti laborum nulla delectus atque molestiae enim!
-        Amet in perspiciatis autem reiciendis sunt non officiis temporibus
-        vel maiores.`,
-                images: [
-                  {
-                    image: "./images/camara.jpg",
-                    thumbail: "./images/camara-thumb.jpg",
-                  },
-                  {
-                    image: "./images/camara-2.jpg",
-                    thumbail: "./images/camara-2-thumb.jpg",
-                  },
-                ],
-                new: false,
-                offer: true,
-                quantity: 1,
-              },
-              {
-                name: "camara_2",
-                price: 450_000,
-                stock: 3,
-                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
-        minus quis corrupti laborum nulla delectus atque molestiae enim!
-        Amet in perspiciatis autem reiciendis sunt non officiis temporibus
-        vel maiores.`,
-                images: [
-                  {
-                    image: "./images/camara.jpg",
-                    thumbail: "./images/camara-thumb.jpg",
-                  },
-                  {
-                    image: "./images/camara-2.jpg",
-                    thumbail: "./images/camara-2-thumb.jpg",
-                  },
-                ],
-                new: false,
-                offer: true,
-                quantity: 1,
-              },
-              {
-                name: "camara 3",
-                price: 450_030,
-                stock: 3,
-                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
-        minus quis corrupti laborum nulla delectus atque molestiae enim!
-        Amet in perspiciatis autem reiciendis sunt non officiis temporibus
-        vel maiores.`,
-                images: [
-                  {
-                    image: "./images/camara.jpg",
-                    thumbail: "./images/camara-thumb.jpg",
-                  },
-                  {
-                    image: "./images/camara-2.jpg",
-                    thumbail: "./images/camara-2-thumb.jpg",
-                  },
-                ],
-                new: false,
-                offer: true,
-                quantity: 1,
-              },
-              {
-                name: "cama 4",
-                price: 4350_000,
-                stock: 3,
-                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
-        minus quis corrupti laborum nulla delectus atque molestiae enim!
-        Amet in perspiciatis autem reiciendis sunt non officiis temporibus
-        vel maiores.`,
-                images: [
-                  {
-                    image: "./images/camara.jpg",
-                    thumbail: "./images/camara-thumb.jpg",
-                  },
-                  {
-                    image: "./images/camara-2.jpg",
-                    thumbail: "./images/camara-2-thumb.jpg",
-                  },
-                ],
-                new: false,
-                offer: true,
-                quantity: 1,
-              },
-            ],
+            products: [],
             cartOpen: false,
 
             // total: 0,
@@ -173,12 +84,19 @@
         },
         computed: {
           total() {
-            return (this.cart.reduce((prev, curr) => {
+            return this.cart.reduce((prev, curr) => {
               const prevPrice = prev.price || prev;
               const prevQuantity = prev.quantity || 1;
               return prevPrice * prevQuantity + curr.price * curr.quantity;
-            }, 0));
+            }, 0);
           },
+        },
+        created() {
+          fetch("https://my-json-server.typicode.com/iosamuel/demo/products")
+            .then((res) => res.json())
+            .then((data) => {
+              this.products = data;
+            });
         },
       });
     </script>
