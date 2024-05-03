@@ -10,7 +10,9 @@
     <div id="app">
       <header>
         <h3>Ecommerce VueJS</h3>
-        <button class="cart" v-on:click="cartOpen = !cartOpen">Carro (0)</button>
+        <button class="cart" v-on:click="cartOpen = !cartOpen">
+          Carro ({{ cart.length }})
+        </button>
         <div class="cart-content" v-show="cartOpen">
           <div
             class="cart-content__product"
@@ -24,7 +26,8 @@
             />
             <span
               >{{ product.name }} - $ {{ new
-              Intl.NumberFormat("es-CO").format(product.price) }}</span
+              Intl.NumberFormat("es-CO").format(product.price) }}
+              ({{product.quantity}})</span
             >
           </div>
         </div>
@@ -72,9 +75,15 @@
           </p>
           <div class="discount">
             <span>Codigo de descuento</span>
-            <input type="text" placeholder="Ingresa tu codigo:" @keyup.enter="product.price *= 50 / 100" />
+            <input
+              type="text"
+              placeholder="Ingresa tu codigo:"
+              @keyup.enter="applyDiscount($event)"
+            />
           </div>
-          <button :disabled="product.stock === 0" @click="product.stock -= 1">Agregar al carrito</button>
+          <button :disabled="product.stock === 0" @click="addToCart()">
+            Agregar al carrito
+          </button>
         </section>
       </main>
     </div>
@@ -105,96 +114,35 @@
               ],
               new: false,
               offer: true,
+              quantity: 1,
             },
             cartOpen: true,
             activeImage: 0,
-            cart: [
-              {
-                name: "camara",
-                price: 450_000,
-                stock: 3,
-                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
-            minus quis corrupti laborum nulla delectus atque molestiae enim!
-            Amet in perspiciatis autem reiciendis sunt non officiis temporibus
-            vel maiores.`,
-                images: [
-                  {
-                    image: "./images/camara.jpg",
-                    thumbail: "./images/camara-thumb.jpg",
-                  },
-                  {
-                    image: "./images/camara-2.jpg",
-                    thumbail: "./images/camara-2-thumb.jpg",
-                  },
-                ],
-                new: false,
-                offer: true,
-              },
-              {
-                name: "camara",
-                price: 450_000,
-                stock: 3,
-                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
-            minus quis corrupti laborum nulla delectus atque molestiae enim!
-            Amet in perspiciatis autem reiciendis sunt non officiis temporibus
-            vel maiores.`,
-                images: [
-                  {
-                    image: "./images/camara.jpg",
-                    thumbail: "./images/camara-thumb.jpg",
-                  },
-                  {
-                    image: "./images/camara-2.jpg",
-                    thumbail: "./images/camara-2-thumb.jpg",
-                  },
-                ],
-                new: false,
-                offer: true,
-              },
-              {
-                name: "camara",
-                price: 450_000,
-                stock: 3,
-                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
-            minus quis corrupti laborum nulla delectus atque molestiae enim!
-            Amet in perspiciatis autem reiciendis sunt non officiis temporibus
-            vel maiores.`,
-                images: [
-                  {
-                    image: "./images/camara.jpg",
-                    thumbail: "./images/camara-thumb.jpg",
-                  },
-                  {
-                    image: "./images/camara-2.jpg",
-                    thumbail: "./images/camara-2-thumb.jpg",
-                  },
-                ],
-                new: false,
-                offer: true,
-              },
-              {
-                name: "camara",
-                price: 450_000,
-                stock: 3,
-                content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
-            minus quis corrupti laborum nulla delectus atque molestiae enim!
-            Amet in perspiciatis autem reiciendis sunt non officiis temporibus
-            vel maiores.`,
-                images: [
-                  {
-                    image: "./images/camara.jpg",
-                    thumbail: "./images/camara-thumb.jpg",
-                  },
-                  {
-                    image: "./images/camara-2.jpg",
-                    thumbail: "./images/camara-2-thumb.jpg",
-                  },
-                ],
-                new: false,
-                offer: true,
-              },
-            ],
+            cart: [],
+            discountCodes: ["VIERNES", "MONTAÑA"],
           };
+        },
+        methods: {
+          applyDiscount(event) {
+            const discountCodeIndex = this.discountCodes.indexOf(
+              event.target.value
+            );
+            if (discountCodeIndex >= 0) {
+              this.product.price *= 50 / 100;
+              this.discountCodes.splice(discountCodeIndex, 1);
+            }
+          },
+          addToCart() {
+            const prodIndex = this.cart.findIndex(
+              (prod) => prod.name === this.product.name
+            );
+            if (prodIndex >= 0) {
+              this.cart[prodIndex].quantity += 1;
+            } else {
+              this.cart.push(this.product);
+            }
+            this.product.stock -= 1;
+          },
         },
       });
       app.mount("#app");
