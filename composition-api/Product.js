@@ -30,7 +30,7 @@ app.component("product", {
   <p class="description_status" v-else-if="product.stock === 1">
     Ultima unidad disponible
   </p>
-  <p class="description__price">
+  <p class="description__price" :style="{ color: price_color }">
     $ {{ new Intl.NumberFormat("es-CO").format(product.price) }}
   </p>
   <p class="description__content">
@@ -58,6 +58,7 @@ app.component("product", {
   setup(props, context) {
     const productState = reactive({
       activeImage: 0,
+      price_color: "rgb(104 104 209)",
     });
 
     function sendToCart() {
@@ -73,6 +74,22 @@ app.component("product", {
         discountCodes.value.splice(discountCodeIndex, 1);
       }
     }
+
+    watch(
+      () => productState.activeImage,
+      (val, aldvalue) => {
+        console.log(val, aldvalue);
+      }
+    );
+
+    watch(
+      () => props.product.stock,
+      (stock) => {
+        if (stock <= 1) {
+          productState.price_color = "rgb(255 0 0)";
+        }
+      }
+    );
 
     return {
       ...toRefs(productState),
