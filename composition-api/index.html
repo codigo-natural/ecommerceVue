@@ -33,9 +33,12 @@
           <p>Total: $ {{ new Intl.NumberFormat("es-CO").format(total)}}</p>
         </div>
       </header>
+      <div class="product-search">
+        <input type="text" placeholder="Buscar producto..." v-model="filtro" />
+      </div>
       <main>
         <Product
-          v-for="product in products"
+          v-for="product in filteredProducts"
           :key="product.name"
           :product="product"
           @sendtocart="addToCart($event)"
@@ -45,100 +48,14 @@
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
-      const { createApp, ref, reactive, toRefs, watch, computed } = Vue;
+      const { createApp, ref, reactive, toRefs, watch, computed, onMounted } =
+        Vue;
 
       const app = createApp({
         setup() {
-          const products = ref([
-            {
-              name: "camara_1",
-              price: 450_00,
-              stock: 3,
-              content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
-        minus quis corrupti laborum nulla delectus atque molestiae enim!
-        Amet in perspiciatis autem reiciendis sunt non officiis temporibus
-        vel maiores.`,
-              images: [
-                {
-                  image: "./images/camara.jpg",
-                  thumbail: "./images/camara-thumb.jpg",
-                },
-                {
-                  image: "./images/camara-2.jpg",
-                  thumbail: "./images/camara-2-thumb.jpg",
-                },
-              ],
-              new: false,
-              offer: true,
-              quantity: 1,
-            },
-            {
-              name: "camara_2",
-              price: 450_000,
-              stock: 3,
-              content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
-        minus quis corrupti laborum nulla delectus atque molestiae enim!
-        Amet in perspiciatis autem reiciendis sunt non officiis temporibus
-        vel maiores.`,
-              images: [
-                {
-                  image: "./images/camara.jpg",
-                  thumbail: "./images/camara-thumb.jpg",
-                },
-                {
-                  image: "./images/camara-2.jpg",
-                  thumbail: "./images/camara-2-thumb.jpg",
-                },
-              ],
-              new: false,
-              offer: true,
-              quantity: 1,
-            },
-            {
-              name: "camara 3",
-              price: 450_030,
-              stock: 3,
-              content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
-        minus quis corrupti laborum nulla delectus atque molestiae enim!
-        Amet in perspiciatis autem reiciendis sunt non officiis temporibus
-        vel maiores.`,
-              images: [
-                {
-                  image: "./images/camara.jpg",
-                  thumbail: "./images/camara-thumb.jpg",
-                },
-                {
-                  image: "./images/camara-2.jpg",
-                  thumbail: "./images/camara-2-thumb.jpg",
-                },
-              ],
-              new: false,
-              offer: true,
-              quantity: 1,
-            },
-            {
-              name: "cama 4",
-              price: 4350_000,
-              stock: 3,
-              content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque velit
-        minus quis corrupti laborum nulla delectus atque molestiae enim!
-        Amet in perspiciatis autem reiciendis sunt non officiis temporibus
-        vel maiores.`,
-              images: [
-                {
-                  image: "./images/camara.jpg",
-                  thumbail: "./images/camara-thumb.jpg",
-                },
-                {
-                  image: "./images/camara-2.jpg",
-                  thumbail: "./images/camara-2-thumb.jpg",
-                },
-              ],
-              new: false,
-              offer: true,
-              quantity: 1,
-            },
-          ]);
+          const products = ref([]);
+
+          const filtro = ref("");
 
           const cartState = reactive({
             cartOpen: false,
@@ -183,11 +100,32 @@
           //   }, 0);
           // });
 
+          filteredProducts = computed(() => {
+            if (filtro.value != "") {
+              return products.value.filter((product) =>
+                product.name.toUpperCase().includes(filtro.value.toUpperCase())
+              );
+            }
+            return products.value;
+          });
+
+          onMounted(() => {
+            console.log("mounted");
+          });
+
+          // setup() === created()
+          fetch("https://my-json-server.typicode.com/iosamuel/demo/products")
+            .then((res) => res.json())
+            .then((data) => {
+              products.value = data;
+            });
+
           return {
             ...toRefs(cartState),
 
             addToCart,
-
+            filtro,
+            filteredProducts,
             products,
           };
         },
